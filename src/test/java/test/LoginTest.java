@@ -34,6 +34,5 @@ public class LoginTest extends BaseTest {
         browser.findElement(By.cssSelector("[data-test='login-button']")).click();
         String title = browser.findElement(By.cssSelector("[data-test='error']")).getText();
         assertEquals(title, "Epic sadface: Username is required");
-
     }
 }
