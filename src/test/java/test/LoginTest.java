@@ -9,30 +9,23 @@ import static org.testng.Assert.assertTrue;
 public class LoginTest extends BaseTest {
     @Test
     public void checlogin() {
-        browser.findElement(By.cssSelector("[id='user-name']")).sendKeys("standard_user");
-        // browser.findElement(By.cssSelector("[id='user-name']")).sendKeys(Keys.CONTROL + "A");
-        // browser.findElement(By.cssSelector("[id='user-name']")).sendKeys(Keys.BACK_SPACE);
-        browser.findElement(By.xpath("//*[@placeholder='Password']")).sendKeys("secret_sauce");
-        browser.findElement(By.cssSelector("[data-test='login-button']")).click();
-        String title = browser.findElement(By.cssSelector("[data-test='title']")).getText();
-        assertEquals(title, "Products");
+        loginPage.open();
+        loginPage.login("standard_user", "secret_sauce");
+        assertEquals(productPage.getTitle(), "Products");
     }
 
     @Test
     public void checIncoretlogin() {
-        browser.findElement(By.cssSelector("[id='user-name']")).sendKeys("locked_out_user");
-        browser.findElement(By.xpath("//*[@placeholder='Password']")).sendKeys("secret_sauce");
-        browser.findElement(By.cssSelector("[data-test='login-button']")).click();
-        boolean errorMessage = browser.findElement(By.xpath("//*[@data-test='error']")).isDisplayed();
-        assertTrue(errorMessage, "The error message fails to appear");
+        loginPage.open();
+        loginPage.login("locked_out_user", "secret_sauce");
+        assertTrue(loginPage.isErrorMessageDisplayed(), "The error message fails to appear");
+        assertEquals(loginPage.getErrorMessage(), "Epic sadface: Sorry, this user has been locked out.");
     }
 
     @Test
     public void errorTextValid() {
-        browser.findElement(By.cssSelector("[id='user-name']")).sendKeys("");
-        browser.findElement(By.cssSelector("[id='password']")).sendKeys("secret_sauce");
-        browser.findElement(By.cssSelector("[data-test='login-button']")).click();
-        String title = browser.findElement(By.cssSelector("[data-test='error']")).getText();
-        assertEquals(title, "Epic sadface: Username is required");
+        loginPage.open();
+        loginPage.login("", "secret_sauce");
+        assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is required");
     }
 }
