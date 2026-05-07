@@ -32,5 +32,3 @@ public class LoginPage {
         return browser.findElement(errorMessege).getText();
     }
 }
-
-

@@ -14,5 +14,4 @@ public class ProductPage {
     public String getTitle() {
         return browser.findElement(pageTitle).getText();
     }
-
 }

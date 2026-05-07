@@ -19,7 +19,7 @@ public class BaseTest {
     public void setup() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
-        // options.addArguments("headless");
+        options.addArguments("headless");
         options.addArguments("guest");
         browser = new ChromeDriver(options);
         browser.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -28,8 +28,8 @@ public class BaseTest {
         productPage = new ProductPage(browser);
     }
 
-    //  @AfterMethod
-    //  public void close() {
-    //   browser.quit();
-    // }
+      @AfterMethod
+      public void close() {
+       browser.quit();
+    }
 }
